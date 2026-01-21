@@ -1,0 +1,561 @@
+---
+title: "R Guidebook"
+author: "Kyler Patrick"
+date: "2026-01-12"
+output: word_document
+---
+
+Always leave the above text untouched.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Always leave the above setup chunk of code untouched. In plain text, it is:
+
+{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+**How to Set Up and use R Markdown**
+
+A. How to create an R Markdown file, or .rmd
+
+1. Open RStudio. Click "File" then "New File" then "R Markdown...".
+  
+2. Name the file and select output type. HTML, PDF and Word are the options. For most people, Word is the best option as it can be easily converted to other file types. Make sure MS office is installed on the device. HTML is best if LaTeX or Microsoft Office are not available. If LaTeX is available, PDF is best, but LaTeX can be difficult to install properly. The output can be changed in the top, next to "output:". The options are word_document, html_document, and pdf_document.
+  
+3. The new R markdown will contain a setup chunk, consisting of this code:
+
+{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+  
+Do not delete that! Any other code that exists once a new R Markdown is opened should be deleted, but the setup chunk must stay.
+  
+4. Click "File" then "Save As...". Save the R Markdown file where you want on the device. 
+  
+5. R does not automatically save, so make sure to always save before closing R or the closing the document. Also, it is good practice to save after writiing a major chunk of code to ensure progress is saved. To save, click "File" then "Save".
+  
+B. How to insert a chunk of code in R markdown
+  
+1. The recommended way is to press "Ctrl" + "Alt" + "I" at the same time on Windows, "Cmd" + "Option" + "I"
+  
+2. This is more difficult, but code chunk can also be set up by following the below format:
+  
+```{r}
+print("Example Code Chunk")
+```
+
+C. Text in R Markdown
+   
+1. In R Markdown, anything not in a code chunk is treated as plain text. Use one asterisk (*) around a phrase to italicize it, two asterisks for bold.
+For Example:
+  
+*Italics*
+    
+**Bold**
+    
+
+2. Equations and mathematical symbols can be written in R Markdown outside code chunks by using LaTeX syntax surrounded by either one dollar sign for inline symbols or two dollar signs for displayed equations.
+  
+For example:
+  
+This is how you write beta: $\beta$. Note that it is \beta surrounded by $ on each side.
+  
+This is how you display .5 + .5 = 1 in fraction format, displayed:
+  
+$$\frac{1}{2} + \frac{1}{2} = 1$$
+Note that it is \frac{1}{2} + \frac{1}{2} = 1, with a double dollar sign on each side. 
+
+For Superscript, do the base followed by ^ then the exponent. $2^2$ = 4
+
+$$4^2 = 16$$
+
+If you want to write a dollar sign in markdown without turning it into an equation, put a backslash, \, before it. This should not be done in code boxes.
+
+**General Coding Tips**
+
+A. Types of Data:
+
+1. Character - This type of data, known as a string in most other languages, is created by using either single or double quote marks, '' or "". For this guide, "" will be used. In addition, when loading data into R, any entries that are something other than a number will be characters. Common symbols such as $ or % will turn numbers into characters.
+  
+2. Integer - This type of data is a whole number. Integers can be converted into characters, and characters into integers, which will be covered later
+  
+3. Numeric - This type of data is a number but not whole. Numeric data can be converted into an integer or character, and characters or integers into numeric, which will be covered later.
+  
+B. Clean Coding Practice
+
+1. Use spaces between lines as well as between different pieces of code to improve reading and debugging
+    
+Example:
+    
+ExampleDF <- as.data.frame(ExampleData)
+
+GuideLm1 <- lm(Var1 ~ Var2 + Var3, Data = Example)
+*Note that the code below also works, but is messier and easier to make mistakes:* 
+Example<-as.data.frame(ExampleData)
+GuideLm1<-lm(Var1~Var2+Var3,Data=Example)
+  
+2. Name variables in a sensible and consistent manner. 
+  
+3. While you can't create variable names using spaces, you can indicate a space using an underscore, _, or by capitalizing the start of each word. Make sure you pick one method of replacing spaces and stick to it to ensure consistency.
+    
+Example:
+    
+ExampleVariable <- ExampleData$Variable1
+    
+Example_Variable <- ExampleData$Variable1
+  
+4. If variable names are too long, remove vowels to ensure that it can still be figured out what it represents. If you choose to do this, do it for everything to ensure consistency.
+    
+Example:
+    
+ExmplVrble <- ExampleVariable
+      
+5. Name models in a consistent manner. For example, if you are creating a linear model, you can name it lm, reg, or mod. Whatever you pick, make sure to keep it consistent and number them to ensure that you and others can figure out which model is which. 
+  
+Example:
+  
+lm1 <- lm(data$y ~ data$x1 + data$x2)
+ 
+lm2 <- lm(data$y ~ data$x3 + data$x4)
+ 
+6. Make sure everything makes sense. Write your code in a manner that you can go back to it some time later and realize what you meant to do. If you have unclear code, you won't be able to go back to it, and collaboration will be impossible as no one else will understand your code. 
+
+7. To make a comment in a code box, or comment out code so it doesn't run, put a hastag, #, in front of it. To do multiple lines at the same time, highlight the lines then hit ctrl + shift + c
+
+C. Saving Files
+
+1. It is best practice to make a folder for the course to save everything in. Then, make subfolders for the different types of files, like data files and markdown files. It is important to save files in an organized manner so you can find a file when you need to. In addition, using a flash drive is wise if you are using a desktop computer in a lab to ensure that you can access the files on any device.
+
+D. Naming objects
+
+1. Objects, which includes data frames, tibbles, models, variables, tables, etc, can be named by typing the name of the object followed by <- then the code creating the object
+
+Example:
+
+Object1 <- summary(ExampleData$x1)
+
+E. Specifying selected variables
+
+1. To pull a specific variable for use in a summary table or model, type the name of the data frame followed by a dollar sign ($), then the name of the variable
+
+Example:
+
+ExampleData$x1
+
+**Installing and Loading Packages**
+
+1. Installing packages
+  
+A. The install.packages() command allows you to install packages. Note that the package name must be spelled correctly and must be surrounded quotation marks, "". Only install each package once. 
+    
+Example:
+        
+install.packages("stargazer")
+      
+Tip:
+      
+I recommend installing the following packages to start for ECON 314:
+      
+stargazer
+      
+jtools
+      
+lmtest
+
+sandwich
+      
+tidyverse (This package includes ggplot2, dplyr, readr, tidyr, purrr, tibble, stingr, forcats, lubridate. You could use R only using the tidyverse, but you will find the other packages to be useful as well.)
+      
+You may find other packages to be useful later on in the course, but this is a great starting place.
+     
+2. Loading packages
+  
+A. The library() command loads packages to the R session. This must be run for each package used each time R is opened. Note that quotes are not needed to load packages. 
+    
+For example:
+
+```{r}
+library(stargazer)
+```
+      
+Tip:
+      
+While you are first learning R, avoid creating a section with library commands for all of your packages used at the top of the document. Load the package each time you need to use it until you confidently know what each package does. 
+      
+**Loading data into R and data cleaning**
+
+*Note - for the purposes of examples cleaning data, so that you can run the code, a dataset has been loaded in for you to use with the below code*
+
+```{r}
+#install.packages("wooldridge") 
+#Run the above line the first time. To run it, delete the hashtag. Then, delete or comment out the line to avoid errors.
+
+library(wooldridge)
+
+data("wage1")
+
+ExampleData <- wage1
+
+View(ExampleData)
+```
+
+A. Loading a downloaded .RData file
+
+1. Copy the path of the RData file. On Windows, you can either click the file then hit Ctrl+Shift+C or right click the file then select "Copy as path". On a Mac, Control-click (or right-click) the file in Finder, hold the Option (⌥) key, and select "Copy [filename] as Pathname".
+
+2. The path should be similar to this example: "C:\Users\kkpat\Desktop\Econometrics\RData\attend.RData". Keep the quotation marks surrounding the file path. For use in R, switch the slashes from backslashes to forward slashes. Run the load() command to load the data, and the View() command to view the data to ensure it loaded in correctly. In addition, the new data will show up in the global environment on the right, you can view it by clicking on it. 
+
+Example:
+
+```{r}
+# You cannot run this code as you do not have this file path
+
+# load("C:/Users/kkpat/Desktop/Econometrics/RData/attend.Rdata")
+
+# ExampleData1 <- attend
+
+# View(ExampleData1)
+```
+
+B. Loading a .csv File
+
+1. Turn any Excel files, .xlsx or .xls, into a .csv file by saving it as a csv in excel. 
+
+2. Load either the tidyverese or readr package, then use the read_csv command. You need to copy the path of the csv file, then switch the slashes from back to forwards, and keep the quotes. It is the same process as the load command, but converts the csv into a tibble in R. A tibble is a modernized version of a data frame, which is the format of data in R. 
+
+Example:
+
+```{r}
+# You cannot run this code as you do not have this file path
+
+# library(tidyverse)
+
+# ExampleData2 <- read_csv("C:/Users/kkpat/Desktop/STAT 320/Proposal/Data/SelectedVars.csv")
+ 
+# View(ExampleData2)
+```
+
+3. If you want to save the new tibble as an RData file, the use the save() command. The file will save to the same folder that the RMarkdown file you are working on is using. 
+
+Example:
+
+```{r}
+save(ExampleData, file = "ExampleData.RData")
+```
+
+
+C. Cleaning Data
+
+1. To remove blank observations, which show up as NA in R, use the na.omit() command. You can either omit NAs from the whole dataset or from a specific variable. You can ignore the outcome of the code, it is a list of remaining observations. 
+
+Example:
+
+```{r}
+ExampleDataNoNA <- na.omit(ExampleData)
+
+ExampleData$WageNoNA <- na.omit(ExampleData$wage)
+```
+
+2. To select specific variables and create a subset, which is good to make large datasets with hundreds or thousands of columns smaller and easier to analyze, use the subset() command. Note that the format for this command is subset(DataName, select = c(VariableName1, VariableName2, etc.)) Use to view() command after to make sure the subset was created properly. 
+
+Example:
+
+```{r}
+ExampleDataSubset <- subset(ExampleData, select = c(wage, educ, exper))
+
+View(ExampleDataSubset)
+```
+
+3. To create a numeric dummy for a categorical variable, use the ifelse() command. Create a new column in the dataset by do DataName\$NewDummy <- ifelse(DataName\$Categorical == "Yes", 1, 0)
+
+Example:
+
+Say that x1 represents if an observation is old or new. We want a binary dummy that = 1 if old, and = 0 if new. In the dataset, all the dummy variables have been created, so the below example is not real code. 
+
+ExampleData\$x1Dummy <- ifelse(DataName\$x1 == "old", 1, 0)
+
+**Summary Tables**
+
+A. Summary() command
+
+1. For data, the summary() command can be used to generate a five number summary (min, Q1, median, Q3, max) plus the mean. Just put the name of the dataset or of the specific variable wanted from the dataset.
+
+Example:
+
+```{r}
+summary(ExampleData)
+```
+
+```{r}
+summary(ExampleData$wage)
+```
+
+2. For models, the summary() command can be used to generate a regression summary, including estimated betas, standard errors, t-tests, p-values, $R^2$ values. Just put the name of the model in the command. 
+
+Example:
+
+```{r}
+Model1 <- lm(wage1$wage ~ wage1$educ + wage1$exper)
+  
+summary(Model1)
+```
+
+B. Stargazer 
+
+1. Load the stargazer package. library(stargazer)
+
+2. Stargazer creates excellent publication quality tables for both data summaries as well as models. In addition, stargazer can be used to compare two different models, or to test for heteroskedasticity with robust standard errors. The outputs can be in plain text, or html. This can be adjusted with the type = command, which must be included. For a plain text output, write type = "text", for an html output write type = "html", out = "Table1.htm"(html files save as .htm). The quotes are needed around the type of table and the output name. For an html table, the out command must be included. The html table will save to the same folder the RMarkdown is saved in. Html tables look better, but text tables are readable within R. I recommend using text tables for everything put papers/presentations. For papers/presentations, use text tables while you are working and only make html tables in the end. Tables can be title with the title = command. The title must be in quotes. 
+
+3. To create data tables, you must include the data name and type of table, and optionally, a title. The data must be a data frame. It is good practice when using stargazer to always use the as.data.frame() command.
+
+Example:
+
+```{r}
+library(stargazer)
+
+stargazer(as.data.frame(ExampleData), type = "text", title = "Data Summary")
+```
+
+4. For a model table, include the model name, type of table, and an optional title. 
+
+Example:
+
+```{r}
+library(stargazer)
+
+stargazer(Model1, type = "text", title = "Model Summary")
+```
+
+5. For multiple models, just type out both models in addition to everything else. 
+
+Example:
+
+stargazer(Model1, Model2, type = html, out = "ModelTable1.htm", title = "Model 1 and 2 Summary")
+
+6. To compare the model to the model estimated with robust standard errors, first find the robust standard errors. This is done with the code: 
+RobustSE <- sqrt(diag(vcovHC(Model1, type = "HC1"))). Then, make the table as you would for a model, but modified, as in the example below:
+
+Example:
+
+```{r}
+library(stargazer)
+
+library(sandwich)
+
+RobustSE <- sqrt(diag(vcovHC(Model1, type = "HC1")))
+
+stargazer(Model1, Model1, se = list(NULL, RobustSE), type = "text",  title = "Linear Regression Results without and with Robust Standard Errors", notes = "Robust standard errors on the right", notes.append = TRUE)
+```
+
+Note that the notes = command adds a note at the bottom of the table.
+
+C. export_summs
+
+1. The export_summs() command, from the jtools package, is another way to make quality model tables. It is written like the summary() comand to have an output of a text table.  
+
+Example:
+
+```{r}
+library(jtools)
+
+export_summs(Model1)
+```
+
+2. To have an export_summs table with both robust and normal standard errors, you need to create the model with robust standard errors. This is done by using the summ() command from the jtools package. The summ() command involves naming a new model, which best practice would be naming the new model the same as the old one, adding "Robust" to the end of its name. Then, in the summ() command, list the model name followed by robust = TRUE. After that, use export_summs(), listing the model, then the robust model, then using the model.names = command to name the columns. 
+
+Example:
+
+```{r}
+library(jtools)
+
+Model1Robust <- summ(Model1, robust = TRUE)
+
+export_summs(Model1, Model1Robust, model.names = c("Standard SE", "Robust SE"))
+```
+
+**Creating Regression Models**
+
+A. Linear models 
+
+1. Use the lm() command to create a linear model. The format is ModelName <- lm(Data\$Y ~ Data\$x1 + Data\$x2 + Data\$x3) Or ModelName <- lm(Y ~ x1 + x2 + x3, data = Data). Note that if you choose the second format, the variable names must exactly match the names from the dataset or the code will not run. Also, the tilde, ~, can be typed by pressing shift + the key next to the 1 key. 
+
+Example:
+
+```{r}
+Reg1 <- lm(ExampleData$wage ~ ExampleData$educ + ExampleData$exper + ExampleData$female)
+
+summary(Reg1)
+```
+
+B. Logarithmic models
+
+1. To create a logarithmic model, you need to compute the natural logarithm of the desired variable(s). This is done by creating a new variable within the dataset. The format is Data\$Logx1 <- log(Data\$x1). After that, the code is the same to create a model. 
+
+Example:
+
+```{r}
+ExampleData$Logwage <- log(ExampleData$wage)
+
+Reg2 <- lm(ExampleData$Logwage ~ ExampleData$educ + ExampleData$exper + ExampleData$female)
+
+summary(Reg2)
+```
+
+**Data Visualizations**
+
+A. Simple plots
+
+1. Simple Scatter plots can be created by using the plot() command. List the x variable then the y variable. To take it further, correlation can be calculated with the cor() command, also listing the x then y.
+
+Example:
+
+```{r}
+plot(ExampleData$exper, ExampleData$wage)
+```
+
+2. Simple histograms can be greated by using the hist(command) and putting the variable in. 
+
+Example:
+
+```{r}
+hist(ExampleData$wage)
+```
+
+```{r}
+cor(ExampleData$exper, ExampleData$wage)
+```
+
+B. The ggplot2 package can be used to create most types of visual, including but not limited to scatter plots and best fit lines, histograms,  violin plots, box and whisker plots, line charts, and pie charts. This package can be quite complicated but very useful. 
+
+Here's a useful link that has a cheat sheet and documentation on the package: https://ggplot2.tidyverse.org/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
